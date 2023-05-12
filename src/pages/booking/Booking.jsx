@@ -8,7 +8,6 @@ const Booking = () => {
   const { user } = useAuth();
 
   const { price, img, title, service_id, _id } = service;
-  console.log(service);
 
   const handleBooking = (e) => {
     e.preventDefault();
@@ -39,13 +38,11 @@ const Booking = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.insertedId) {
           Swal.fire("Booking Added", "Thanks for your Booking", "success");
         }
       })
       .catch((err) => {
-        console.log(err.message);
         if (err?.message) {
           if (err?.message === "Failed to fetch") {
             Swal.fire(

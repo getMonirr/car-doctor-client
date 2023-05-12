@@ -3,8 +3,29 @@ import Logo from "../../../assets/logo.svg";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { FiSearch } from "react-icons/fi";
 import CdButton from "../../../components/CdButton";
+import { useAuth } from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+  const { user, logoutUser } = useAuth();
+
+  const handleLogOut = () => {
+    logoutUser()
+      .then((result) => {
+        if (result) {
+          Swal.fire("Login successful", "Welcome back", "success");
+        }
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `Something went wrong! ${err?.message}`,
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
+      });
+  };
+
   const navItems = (
     <>
       <li>
@@ -71,9 +92,18 @@ const Navbar = () => {
         <Link>
           <FiSearch size={20} />
         </Link>
-        <Link>
-          <CdButton>Appointment</CdButton>
-        </Link>
+        {user ? (
+          <CdButton handleClick={handleLogOut}>Log out</CdButton>
+        ) : (
+          <>
+            <Link>
+              <CdButton>Appointment</CdButton>
+            </Link>
+            <Link to="/login">
+              <CdButton>Log in</CdButton>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

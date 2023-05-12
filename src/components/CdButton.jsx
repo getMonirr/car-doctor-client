@@ -12,7 +12,7 @@ const CdButton = ({ children, className, handleClick, _id }) => {
 };
 
 CdButton.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.any,
   className: PropTypes.string,
   handleClick: PropTypes.func,
   _id: PropTypes.string,
